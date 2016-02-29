@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SettlementManagementModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SettlementManagementModelStoreContainer">
+    <EntitySet Name="Literatures" EntityType="SettlementManagementModel.Store.Literatures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LiteratureReferences" EntityType="SettlementManagementModel.Store.LiteratureReferences" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Settlements" EntityType="SettlementManagementModel.Store.Settlements" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TimeperiodRelatives" EntityType="SettlementManagementModel.Store.TimeperiodRelatives" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="SettlementManagementModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ErrorLogs" EntityType="SettlementManagementModel.Store.ErrorLogs" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Literatures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="LiteratureReferences">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Literature" Type="int" Nullable="true" />
+    <Property Name="Settlement" Type="int" Nullable="true" />
+    <Property Name="Pages" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="TempToken" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Settlements">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="Description" Type="longtext" Nullable="true" />
+    <Property Name="latitude" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="longitude" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="TimeperiodAbsolute" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="TimeperiodRelative" Type="int" Nullable="true" />
+    <Property Name="NumberBuildings" Type="int" Nullable="true" />
+    <Property Name="ActivityYears" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TimeperiodRelatives">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="Password" Type="varchar" Nullable="true" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ErrorLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="longtext" Nullable="true" />
+    <Property Name="Class" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="LineNumber" Type="int" Nullable="true" />
+    <Property Name="Time" Type="datetime" Nullable="true" Precision="3" />
+    <Property Name="Method" Type="varchar" Nullable="true" MaxLength="100" />
+  </EntityType>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SettlementManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Literature">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LiteratureReference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Literature" Type="Int32" />
+          <Property Name="Settlement" Type="Int32" />
+          <Property Name="Pages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TempToken" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Settlement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeperiodAbsolute" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TimeperiodRelative" Type="Int32" />
+          <Property Name="NumberBuildings" Type="Int32" />
+          <Property Name="ActivityYears" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TimeperiodRelative">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SettlementDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Literatures" EntityType="Self.Literature" />
+          <EntitySet Name="LiteratureReferences" EntityType="Self.LiteratureReference" />
+          <EntitySet Name="Settlements" EntityType="Self.Settlement" />
+          <EntitySet Name="TimeperiodRelatives" EntityType="Self.TimeperiodRelative" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ErrorLogs" EntityType="SettlementManagementModel.ErrorLog" />
+        </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LineNumber" Type="Int32" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <Property Name="Method" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SettlementManagementModelStoreContainer" CdmEntityContainer="SettlementDB">
+    <EntitySetMapping Name="Literatures">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.Literature)">
+        <MappingFragment StoreEntitySet="Literatures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LiteratureReferences">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.LiteratureReference)">
+        <MappingFragment StoreEntitySet="LiteratureReferences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Literature" ColumnName="Literature" />
+          <ScalarProperty Name="Settlement" ColumnName="Settlement" />
+          <ScalarProperty Name="Pages" ColumnName="Pages" />
+          <ScalarProperty Name="TempToken" ColumnName="TempToken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settlements">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.Settlement)">
+        <MappingFragment StoreEntitySet="Settlements">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="TimeperiodAbsolute" ColumnName="TimeperiodAbsolute" />
+          <ScalarProperty Name="TimeperiodRelative" ColumnName="TimeperiodRelative" />
+          <ScalarProperty Name="NumberBuildings" ColumnName="NumberBuildings" />
+          <ScalarProperty Name="ActivityYears" ColumnName="ActivityYears" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TimeperiodRelatives">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.TimeperiodRelative)">
+        <MappingFragment StoreEntitySet="TimeperiodRelatives">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(SettlementManagementModel.ErrorLog)">
+        <MappingFragment StoreEntitySet="ErrorLogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Method" ColumnName="Method" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

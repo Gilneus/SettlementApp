@@ -1,0 +1,898 @@
+﻿@{
+    ViewBag.Title = "Settlement";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Settlements
+            <small>You add new Settlements here. Moreover you can edit existing Settlements and even delete them.</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="Settlements.html"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+        </ol>
+        <div class="alert alert-danger alert-dismissible" id="divMSG" style="margin: 15px 0px 5px 0px; display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <span class="errMSG"><i class="icon fa fa-ban"></i>Invalid User Name or Password!</span>
+        </div>
+        <input type="hidden" id="hdnRandom" value="" />
+        <input type="hidden" id="hdnId" value="0" />
+    </section>
+
+    <!-- Main content -->
+    <section class="content" id="secSettlements">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <button type="button" class="btn btn-info pull-right" style="margin-bottom: 10px;" onclick="showAddSettlement();">Add Settlement</button>
+                        <div style="clear:both;"></div>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Absolute Time Period</th>
+                                    <th>Relative Time Period</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="example1Body"></tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <section class="content" id="secNewLiterature" style="display:none;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">New Literature</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" onclick="hideAddLiterature()"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="txtLiteratureName">Name</label>
+                                    <input type="text" class="form-control" id="txtLiteratureName" placeholder="Enter Literature">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-default" onclick="hideAddLiterature()">Cancel</button>
+                        <button type="submit" class="btn btn-info pull-right" onclick="SaveLiterature()">Save Literature</button>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <section class="content" id="secNewLiteratureReference" style="display:none;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">New Literature Reference</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" onclick="hideAddLiteratureReference()"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <button type="button" class="btn btn-info pull-right" onclick="showAddLiterature()">Add Literature</button>
+                        <div style="clear: both;"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ddlReference">Reference</label>
+                                    <select class="form-control select2" style="width: 100%;" id="ddlReference">
+                                        <option value="0" selected="selected">--Select Reference --</option>
+                                        <option value="1">Reference 1</option>
+                                        <option value="2">Reference 2</option>
+                                        <option value="3">Reference 3</option>
+                                    </select>
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtPage">Page</label>
+                                    <input type="text" class="form-control" id="txtPage" placeholder="Enter Page">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-default" onclick="hideAddLiteratureReference()">Cancel</button>
+                        <button type="submit" class="btn btn-info pull-right" onclick="AddLiteratureReference()">Save Reference</button>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <section class="content" id="secNewSettlement" style="display:none;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">New/Edit Sattlement</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" onclick="hideAddSettlement()"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="txtName">Name</label>
+                                    <input type="text" class="form-control" id="txtName" placeholder="Enter Name">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtLongitude">Longitude</label>
+                                    <input type="text" class="form-control" id="txtLongitude" placeholder="Enter Longitude">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="ddlABS">Timeperiod (abs.)</label>
+                                    <input type="text" class="form-control" id="txtABS" placeholder="Enter Timeperiod (abs.)">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label or="txtNumber">Number (Buildings)</label>
+                                    <input type="text" class="form-control" id="txtNumber" placeholder="Enter Number">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtLatitude">Latitude</label>
+                                    <input type="text" class="form-control" id="txtLatitude" placeholder="Enter Latitude">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="ddlREL">Timeperiod (rel.)</label>
+                                    <select class="form-control select2" style="width: 100%;" id="ddlREL">
+                                        <option value="0" selected="selected">--Select Timeperiod (rel.) --</option>
+                                        <option value="1">BC 500</option>
+                                        <option value="2">BC 300</option>
+                                        <option value="3">BC 200</option>
+                                        <option value="4">AC 200</option>
+                                        <option value="5">AC 300</option>
+                                        <option value="6">AC 500</option>
+                                        <option value="7">AC 2020</option>
+                                    </select>
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label or="txtYears">Activity (Years)</label>
+                                    <input type="text" class="form-control" id="txtYears" placeholder="Enter Activity">
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtDescription">Description</label>
+                                    <textarea id="txtDescription" class="textarea" placeholder="Place Description" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtDescription">Literature References</label>
+                                    <button type="button" class="btn btn-info pull-right" onclick="showAddLiteratureReference()" style="margin-bottom:5px;">Add References</button>
+                                    <table id="example2" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Page</th>
+                                                <th style="width: 50px;" class="nosort">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="example2Body">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-default" onclick="hideAddSettlement()">Cancel</button>
+                        <button type="submit" class="btn btn-info pull-right" onclick="SaveSattlement()">Save Sattlement</button>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+
+</div>
+<!-- /.content-wrapper -->
+<!-- page script -->
+
+<script src="../plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<script>
+
+
+    function showAddSettlement() {
+        $("#secSettlements").hide();
+        $("#secNewSettlement").show();
+    }
+
+    function showEditSettlement(Id) {
+        $.ajax({
+            url: '../Settlement/getSettlementDetails',
+            data: JSON.stringify({ Id: Id.toString() }),
+            contentType: "application/json; charset=utf-8",
+            method: 'POSt',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    $("#secSettlements").hide();
+                    $("#secNewSettlement").show();
+                    GenarateRandomString();
+                    fillLiteratureReferenceById(Id.toString());
+                    var data = $.parseJSON(response.data);
+                    $("#txtName").val(data.Name);
+                    $("#txtLongitude").val(data.longitude);
+                    $("#txtLatitude").val(data.latitude);
+                    $("#txtABS").val(data.TimeperiodAbsolute);
+                    $("#ddlREL").val(data.TimeperiodRelative).trigger("change");
+                    $("#txtNumber").val(data.NumberBuildings);
+                    $("#txtYears").val(data.ActivityYears);
+                    $("#hdnId").val(data.Id);
+                    $('iframe').contents().find('.wysihtml5-editor').html(data.Description);
+                }
+                else {
+                    showMessage(2, 'Some error occur while Deleting');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            },
+            error: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            }
+        });
+    }
+
+    function showAddLiterature() {
+        $("#secNewLiterature").show();
+    }
+
+    function hideAddLiterature() {
+        $("#txtLiteratureName").val('');
+        $("#secNewLiterature").hide();
+    }
+
+    function showAddLiteratureReference() {
+        $("#secNewLiteratureReference").show();
+    }
+
+    function hideAddLiteratureReference() {
+        $("#ddlReference").val("0").trigger("change");
+        $("#select2 - ddlReference - container").html("");
+        $("#txtPage").val('');
+        $("#secNewLiterature").hide();
+        $("#secNewLiteratureReference").hide();
+    }
+
+    function hideAddSettlement() {
+        $("#secNewLiterature").hide();
+        $("#secNewLiteratureReference").hide();
+        $("#secNewSettlement").hide();
+        $("#secSettlements").show();
+        $("#txtName").val('');
+        $("#txtLongitude").val('');
+        $("#txtLatitude").val('');
+        $("#txtABS").val('');
+        $("#ddlREL").val('0').trigger("change");
+        $("#txtNumber").val('');
+        $("#txtYears").val('');
+        $("#hdnId").val('0');
+        $('iframe').contents().find('.wysihtml5-editor').html('');
+        GenarateRandomString();
+        fillLiteratureReference();
+    }
+
+    function DeleteSettlement(id) {
+        if (!confirm("Are you sure to delete Settlement!")) {
+            return true;
+        }
+        $.ajax({
+            url: '../Settlement/DeleteSettlement',
+            data: JSON.stringify({ id: id.toString() }),
+            contentType: "application/json; charset=utf-8",
+            method: 'POST',
+            success: function (response) {
+                //console.log(response);
+                if (response == "Success") {
+                    showMessage(1, 'Success! Settlement has been deleted successfully!');
+                    fillSettelemets();
+                }
+                else {
+                    showMessage(2, 'Some error occur while Deleting!');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            },
+            error: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            }
+        });
+    }
+
+    function fillTimeperiodRelatives() {
+        $.ajax({
+            url: '../Settlement/getTimeperiodRelative',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    var data = $.parseJSON(response.data);
+                    var st = '<option value="0" selected="selected">--Select Timeperiod (rel.) --</option>';
+                    $.each(data, function (i) {
+                        st += '<option value="' + data[i].Id + '" >' + data[i].Name + '</option>';
+                    });
+                    $("#ddlREL").html(st);
+                }
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+    }
+
+    function fillLiteratures() {
+        $.ajax({
+            url: '../Settlement/getLiteratures',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    var data = $.parseJSON(response.data);
+                    var st = '<option value="0" selected="selected">-- Select Reference --</option>';
+                    $.each(data, function (i) {
+                        st += '<option value="' + data[i].Id + '" >' + data[i].Name + '</option>';
+                    });
+                    $("#ddlReference").html(st);
+                }
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+    }
+
+    function showMessage(type, message) {
+        var st = '';
+        if (type == 1) {
+            st += '<i class="icon fa fa-check"></i> ' + message;
+            $('#divMSG .errMSG').html(st);
+            $('#divMSG').attr('class', 'alert alert-success alert-dismissible');
+        }
+        else if (type == 2) {
+            st += '<i class="icon fa fa-ban"></i> ' + message;
+            $('#divMSG .errMSG').html(st);
+            $('#divMSG').attr('class', 'alert alert-danger alert-dismissible');
+        }
+
+        $('#divMSG').show('slow');
+        setTimeout(function () {
+            $('#divMSG').hide('slow');
+        }, 4000);
+    }
+
+    function fillSettelemets() {
+        $.ajax({
+            url: '../Settlement/getAllSettelemets',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    var data = $.parseJSON(response.data);
+                    var st = '';
+                    $.each(data, function (i) {
+
+                        st += '<tr>';
+                        st += '    <td>' + data[i].Name + '</td>';
+                        st += '    <td>';
+                        st += '        ' + data[i].Description + '';
+                        st += '    </td>';
+                        st += '    <td>' + data[i].TimeperiodAbsolute + '</td>';
+                        st += '    <td>' + data[i].TimeperiodRelativeName + '</td>';
+                        st += '    <td>';
+                        st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Edit" onclick="showEditSettlement(' + data[i].Id + ')">';
+                        st += '            <i class="fa fa-edit"></i>';
+                        st += '        </button>';
+                        st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Delete" onclick="DeleteSettlement(' + data[i].Id + ')" >';
+                        st += '            <i class="fa fa-close"></i>';
+                        st += '        </button>';
+                        st += '    </td>';
+                        st += '</tr>';
+                    });
+
+                    $("#example1").DataTable({
+                        "bDestroy": true,
+                    });
+                    $("#example1").dataTable().fnDestroy();
+                    $("#example1Body").html(st);
+                    //Append stuff to my table
+                    $("#example1").DataTable();
+                    //$example1.fnDraw()
+                }
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+    }
+
+    function showValidationMessage(id, message) {
+        $('#' + id).next().html('<i class="fa fa-times-circle-o"></i> ' + message).show();
+        $('#' + id).parent('div').addClass('has-error');
+    }
+
+    function removeValidationMessage() {
+        $('.has-error').each(function () {
+            $(this).removeClass('has-error');
+            $(this).find('.lblErr').hide();
+        });
+    }
+
+    function ValidateLiteratureForm() {
+        var res = true;
+        removeValidationMessage();
+        if ($("#txtLiteratureName").val() == '') {
+            showValidationMessage("txtEmail", "Literature Name Required!");
+            res = false;
+        }
+        return res;
+    }
+
+    function SaveLiterature() {
+        if (!ValidateLiteratureForm()) {
+            return;
+        }
+        var Literature = $("#txtLiteratureName").val();
+        var data = JSON.stringify({ Literature: Literature });
+        $.ajax({
+            url: '../Literature/AddLiterature',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            method: 'POST',
+            success: function (response) {
+                if (response == "Success") {
+                    hideAddLiterature();
+                    fillLiteratures();
+                    showMessage(1, 'Literature has been saved successfully!');
+                }
+                else {
+                    showMessage(2, 'Something went Wrong!');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            },
+            error: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            }
+        });
+    }
+
+    function ValidateLiteratureReferenceForm() {
+        var res = true;
+        removeValidationMessage();
+        if ($("#ddlReference").val() == '0') {
+            $('#ddlReference').next().next().html('<i class="fa fa-times-circle-o"></i> Literature Reference Required!').show();
+            $('#ddlReference').parent('div').addClass('has-error');
+            res = false;
+        }
+        if ($("#txtPage").val() == '') {
+            showValidationMessage("txtPage", "Page Required!");
+            res = false;
+        }
+        return res;
+    }
+
+    function AddLiteratureReference() {
+        if (!ValidateLiteratureReferenceForm()) {
+            return;
+        }
+        var Id = $("#hdnId").val();
+        var Reference = $("#ddlReference").val();
+        var Page = $("#txtPage").val();
+        var Random = $("#hdnRandom").val();
+        var data = JSON.stringify({ Id: Id, Reference: Reference, Page: Page, Random: Random });
+        $.ajax({
+            url: '../Literature/AddLiteratureReference',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            method: 'POST',
+            success: function (response) {
+                if (response == "Success") {
+                    hideAddLiteratureReference();
+                    
+                    if (Id == "0") {
+                        fillLiteratureReference();
+                    }
+                    else {
+                        fillLiteratureReferenceById(Id);
+                    }
+                    showMessage(1, 'Literature Reference has been saved successfully!');
+                }
+                else {
+                    showMessage(2, 'Something went Wrong!');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            },
+            error: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            }
+        });
+    }
+
+    function fillLiteratureReference() {
+        var token = $("#hdnRandom").val();
+        $.ajax({
+            url: '../Literature/getAllLiteratureReference',
+            data: { token: token },
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    var data = $.parseJSON(response.data);
+                    var st = '';
+                    $.each(data, function (i) {
+                        st += '<tr>';
+                        st += '    <td>' + data[i].LiteratureName + '</td>';
+                        st += '    <td>' + data[i].Pages + '</td>';
+                        st += '    <td>';
+                        st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Delete"  onclick="DeleteLiteratureReference(' + data[i].Id + ')" >';
+                        st += '            <i class="fa fa-close"></i>';
+                        st += '        </button>';
+                        st += '    </td>';
+                        st += '</tr>';
+                    });
+
+                    $("#example2").DataTable({
+                        "bDestroy": true,
+                    });
+                    $("#example2").dataTable().fnDestroy();
+                    $("#example2Body").html(st);
+                    //Append stuff to my table
+                    $("#example2").DataTable();
+                    //$example1.fnDraw()
+                }
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+    }
+
+    function fillLiteratureReferenceById(Id) {
+        $.ajax({
+            url: '../Literature/getAllLiteratureReferenceBySattlement',
+            data: { Id: Id },
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                if (response != null && response.success == 1) {
+                    var data = $.parseJSON(response.data);
+                    var st = '';
+                    $.each(data, function (i) {
+                        st += '<tr>';
+                        st += '    <td>' + data[i].LiteratureName + '</td>';
+                        st += '    <td>' + data[i].Pages + '</td>';
+                        st += '    <td>';
+                        st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Delete"  onclick="DeleteLiteratureReference(' + data[i].Id + ')" >';
+                        st += '            <i class="fa fa-close"></i>';
+                        st += '        </button>';
+                        st += '    </td>';
+                        st += '</tr>';
+                    });
+
+                    $("#example2").DataTable({
+                        "bDestroy": true,
+                    });
+                    $("#example2").dataTable().fnDestroy();
+                    $("#example2Body").html(st);
+                    //Append stuff to my table
+                    $("#example2").DataTable();
+                    //$example1.fnDraw()
+                }
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+    }
+
+    function DeleteLiteratureReference(id) {
+        if (!confirm("Are you sure to delete Literature Reference!")) {
+            return true;
+        }
+        $.ajax({
+            url: '../Literature/DeleteLiteratureReference',
+            data: JSON.stringify({ id: id.toString() }),
+            contentType: "application/json; charset=utf-8",
+            method: 'POST',
+            success: function (response) {
+                //console.log(response);
+                if (response == "Success") {
+                    showMessage(1, 'Success! LiteratureReference has been deleted successfully!');
+                    var SId = $("#hdnId").val();
+                    if (SId == "0") {
+                        fillLiteratureReference();
+                    }
+                    else {
+                        fillLiteratureReferenceById(SId);
+                    }
+                }
+                else {
+                    showMessage(2, 'Some error occur while Deleting!');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            },
+            error: function (response) {
+                showMessage(2, 'Some error occur while Deleting');
+            }
+        });
+    }
+
+    function GenarateRandomString() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 10; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        $("#hdnRandom").val(text);
+        return text;
+    }
+
+    function ValidateSattlmentForm() {
+        var res = true;
+        removeValidationMessage();
+        if ($("#txtName").val() == '') {
+            showValidationMessage("txtName", "Name Required!");
+            res = false;
+        }
+        if ($("#txtLongitude").val() == '') {
+            showValidationMessage("txtLongitude", "Longitude Required!");
+            res = false;
+        }
+        if ($("#txtLatitude").val() == '') {
+            showValidationMessage("txtLatitude", "Latitude Required!");
+            res = false;
+        }
+        if ($("#txtABS").val() == '') {
+            showValidationMessage("txtABS", "Timeperiod (abs.) Required!");
+            res = false;
+        }
+        if ($("#ddlREL").val() == '0') {
+            $('#ddlREL').next().next().html('<i class="fa fa-times-circle-o"></i> Timeperiod (rel.) Required!').show();
+            $('#ddlREL').parent('div').addClass('has-error');
+            res = false;
+        }
+        if ($("#txtNumber").val() == '') {
+            showValidationMessage("txtNumber", "Number (Buildings) !");
+            res = false;
+        }
+        if ($("#txtYears").val() == '') {
+            showValidationMessage("txtYears", "Activity (Years)!");
+            res = false;
+        }
+        return res;
+    }
+
+
+    function SaveSattlement()
+    {
+        if (!ValidateSattlmentForm()) {
+            return;
+        }
+
+        var Name = $("#txtName").val();
+        var Longitude = $("#txtLongitude").val();
+        var Latitude = $("#txtLatitude").val();
+        var ABS = $("#txtABS").val();
+        var REL = $("#ddlREL").val();
+        var Number = $("#txtNumber").val();
+        var Years = $("#txtYears").val();
+        var Description = $('iframe').contents().find('.wysihtml5-editor').html();
+        var Id = $("#hdnId").val();
+        var token = $("#hdnRandom").val();
+
+        var data = JSON.stringify({ Name: Name, Longitude: Longitude, Latitude: Latitude, ABS: ABS, REL: REL, Number: Number, Years: Years, Description: Description, Id: Id, token: token });
+        $.ajax({
+            url: '../Settlement/AddSettlement',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            method: 'POST',
+            success: function (response) {
+                if (response == "Success") {
+                    hideAddSettlement();
+                    fillSettelemets();
+                    showMessage(1, 'Settelemet has been saved successfully!');
+                }
+                else {
+                    showMessage(2, 'Something went Wrong!');
+                }
+            },
+            failure: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            },
+            error: function (response) {
+                showMessage(2, 'Something went Wrong!');
+            }
+        });
+    }
+
+    var $example1;
+    var $example2;
+    var $editor;
+
+    $(document).ready(function () {
+        $example1 = $("#example1").DataTable();
+        $example2 = $('#example2').DataTable({
+            "paging": true,
+            "pageLength": 5,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': ['nosort']
+            }]
+        });
+        $(".select2").select2();
+        //bootstrap WYSIHTML5 - text editor
+        $editor = $(".textarea").wysihtml5();
+
+        GenarateRandomString();
+        fillTimeperiodRelatives();
+        fillLiteratures();
+        fillSettelemets();
+    });
+
+    $(document).ready(function () {
+        $("#txtPage").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 109, 173]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#txtNumber, #txtYears").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#txtLongitude, #txtLatitude").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 109, 110, 173, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+    });
+
+</script>
