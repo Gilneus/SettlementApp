@@ -104,7 +104,7 @@ namespace SettlementApp.Controllers
                 
             }
 
-            return Json(points);
+            return Json(points, JsonRequestBehavior.AllowGet);
 
         }
 

@@ -113,7 +113,6 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <button type="submit" class="btn btn-default" onclick="hideGeoJson()">Cancel</button>
-                        <button type="submit" class="btn btn-info pull-right" onclick="CopyGeoJson()">Copy to clipboard</button>
                     </div>
                 </div>
                 <!-- /.box -->
@@ -379,11 +378,12 @@
 
     function showGeoJson() {
         $("#secGeoJson").show();
+        $("#secSettlements").hide();
     }
 
     function hideGeoJson() {
-        $("#txtGeoJson").val('');
         $("#secGeoJson").hide();
+        $("#secSettlements").show();
     }
 
     function showAddLiteratureReference() {
@@ -525,7 +525,7 @@
             method: 'GET',
             success: function (response) {
                 //console.log(response);
-                $("#txtGeoJson").val(response.data);
+                $("#txtGeoJson").val(JSON.stringify(response));
             },
             failure: function (response) {
                 //console.log(response);
