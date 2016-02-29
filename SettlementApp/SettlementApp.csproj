@@ -898,7 +898,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImprintController.cs" />
     <Compile Include="Controllers\LiteratureController.cs" />
     <Compile Include="Controllers\SettlementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -941,8 +943,8 @@
     <Content Include="Views\Shared\_Master.cshtml" />
     <None Include="Properties\PublishProfiles\archaeology-settlements.de - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <Content Include="Views\Home\Imprint.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Imprint\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
