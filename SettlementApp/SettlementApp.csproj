@@ -941,6 +941,8 @@
     <Content Include="Views\Shared\_Master.cshtml" />
     <None Include="Properties\PublishProfiles\archaeology-settlements.de - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Views\Home\Imprint.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

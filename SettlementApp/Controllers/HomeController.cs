@@ -37,6 +37,15 @@ namespace SettlementApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Imprint()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
 
     }
 }

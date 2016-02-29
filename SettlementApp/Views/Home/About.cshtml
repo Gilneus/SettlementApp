@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            About
+            <small>A short explanation of this project.</small>
+        </h1>
+        <div class="alert alert-danger alert-dismissible" id="divMSG" style="margin: 15px 0px 5px 0px; display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <span class="errMSG"><i class="icon fa fa-ban"></i>Invalid User Name or Password!</span>
+        </div>
+        <input type="hidden" id="hdnRandom" value="" />
+        <input type="hidden" id="hdnId" value="0" />
+    </section>
+</div>
