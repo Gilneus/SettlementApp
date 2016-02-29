@@ -51,26 +51,60 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-    <section class="content" id="secNewLiterature" style="display:none;">
+<section class="content" id="secNewLiterature" style="display: none;">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Literature</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" onclick="hideAddLiterature()"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="txtLiteratureName">Name</label>
+                                <input type="text" class="form-control" id="txtLiteratureName" placeholder="Enter Literature">
+                                <label class="control-label lblErr" for="inputError" style="display: none;"></label>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-default" onclick="hideAddLiterature()">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right" onclick="SaveLiterature()">Save Literature</button>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<section class="content" id="secGeoJson" style="display:none;">
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">New Literature</h3>
+                        <h3 class="box-title">GeoJson</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button type="button" class="btn btn-box-tool" onclick="hideAddLiterature()"><i class="fa fa-remove"></i></button>
+                            <button type="button" class="btn btn-box-tool" onclick="hideGeoJson()"><i class="fa fa-remove"></i></button>
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="txtLiteratureName">Name</label>
-                                    <input type="text" class="form-control" id="txtLiteratureName" placeholder="Enter Literature">
-                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
-                                </div>
+                                <textarea id="txtGeoJson" class="textarea" placeholder="Place Description" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+
                                 <!-- /.form-group -->
                             </div>
                             <!-- /.col -->
@@ -78,8 +112,8 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-default" onclick="hideAddLiterature()">Cancel</button>
-                        <button type="submit" class="btn btn-info pull-right" onclick="SaveLiterature()">Save Literature</button>
+                        <button type="submit" class="btn btn-default" onclick="hideGeoJson()">Cancel</button>
+                        <button type="submit" class="btn btn-info pull-right" onclick="CopyGeoJson()">Copy to clipboard</button>
                     </div>
                 </div>
                 <!-- /.box -->
@@ -88,7 +122,9 @@
         </div>
         <!-- /.row -->
     </section>
-    <!-- /.content -->
+
+
+<!-- /.content -->
     <section class="content" id="secNewLiteratureReference" style="display:none;">
         <div class="row">
             <div class="col-xs-12">
@@ -182,14 +218,22 @@
                                 <div class="form-group">
                                     <label or="txtNumber">Number (Buildings)</label>
                                     <input type="text" class="form-control" id="txtNumber" placeholder="Enter Number">
+                                    <label class="control-label lblErr" for="inputError" style="display: none;"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label or="txtSurface">Surface (Hectars)</label>
+                                    <input type="text" class="form-control" id="txtSurface" placeholder="Enter Surface">
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
-                                <!-- /.form-group -->
+                                <div class="form-group">
+                                        <label for="txtDescription">Description</label>
+                                        <textarea id="txtDescription" class="textarea" placeholder="Place Description" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                    </div>
                             </div>
                             <!-- /.col -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="txtLatitude">Latitude</label>
+                                    <label class="pull-left" for="txtLatitude">Latitude</label> <a class="pull-right" target="_blank" href="https://en.wikipedia.org/wiki/World_Geodetic_System">Decimal degrees system (WGS84)</a>
                                     <input type="text" class="form-control" id="txtLatitude" placeholder="Enter Latitude">
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
@@ -198,13 +242,7 @@
                                     <label for="ddlREL">Timeperiod (rel.)</label>
                                     <select class="form-control select2" style="width: 100%;" id="ddlREL">
                                         <option value="0" selected="selected">--Select Timeperiod (rel.) --</option>
-                                        <option value="1">BC 500</option>
-                                        <option value="2">BC 300</option>
-                                        <option value="3">BC 200</option>
-                                        <option value="4">AC 200</option>
-                                        <option value="5">AC 300</option>
-                                        <option value="6">AC 500</option>
-                                        <option value="7">AC 2020</option>
+                                        <option value="1">AC 2020</option>
                                     </select>
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
@@ -212,18 +250,36 @@
                                 <div class="form-group">
                                     <label or="txtYears">Activity (Years)</label>
                                     <input type="text" class="form-control" id="txtYears" placeholder="Enter Activity">
+                                    <label class="control-label lblErr" for="inputError" style="display: none;"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ddlCountry">Country</label>
+                                    <select class="form-control select2" style="width: 100%;" id="ddlCountry">
+                                        <option value="0" selected="selected">--Select Country --</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Poland">Poland</option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Slovakia">Slovakia</option>
+                                        <option value="Russia">Russia</option>
+                                        <option value="Czech">Czech Republic</option>
+                                        <option value="Ukraine">Ukraine</option>
+                                        <option value="Bulgaria">Bulgaria</option>
+                                        <option value="Slovenia">Slovenia</option>
+                                        <option value="Romania">Romania</option>
+                                        <option value="Italia">Italia</option>
+                                        <option value="Luxembourg">Luxembourg</option>
+                                        <option value="Netherlands">Netherlands</option>
+                                        <option value="Serbia">Serbia</option>
+                                        <option value="France">France</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Switzerland">Switzerland</option>
+                                    </select>
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
                                 <!-- /.form-group -->
                             </div>
                             <!-- /.col -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="txtDescription">Description</label>
-                                    <textarea id="txtDescription" class="textarea" placeholder="Place Description" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
                             <!-- /.col -->
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -295,7 +351,9 @@
                     $("#txtNumber").val(data.NumberBuildings);
                     $("#txtYears").val(data.ActivityYears);
                     $("#hdnId").val(data.Id);
-                    $('iframe').contents().find('.wysihtml5-editor').html(data.Description);
+                    $("#txtSurface").val(data.SurfaceInHectars);
+                    $('#txtDescription').val(data.Description);
+                    $("#ddlCountry").val(data.Country).trigger("change");
                 }
                 else {
                     showMessage(2, 'Some error occur while Deleting');
@@ -317,6 +375,15 @@
     function hideAddLiterature() {
         $("#txtLiteratureName").val('');
         $("#secNewLiterature").hide();
+    }
+
+    function showGeoJson() {
+        $("#secGeoJson").show();
+    }
+
+    function hideGeoJson() {
+        $("#txtGeoJson").val('');
+        $("#secGeoJson").hide();
     }
 
     function showAddLiteratureReference() {
@@ -342,9 +409,11 @@
         $("#txtABS").val('');
         $("#ddlREL").val('0').trigger("change");
         $("#txtNumber").val('');
+        $("#txtSurface").val('');
         $("#txtYears").val('');
         $("#hdnId").val('0');
-        $('iframe').contents().find('.wysihtml5-editor').html('');
+        $('#txtDescription').val();
+        $("#ddlCountry").val('0').trigger("change");
         GenarateRandomString();
         fillLiteratureReference();
     }
@@ -447,6 +516,25 @@
             $('#divMSG').hide('slow');
         }, 4000);
     }
+
+    function fillGeoJson() {
+        $.ajax({
+            url: '../Settlement/GetGeoJson',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            method: 'GET',
+            success: function (response) {
+                //console.log(response);
+                $("#txtGeoJson").val(response.data);
+            },
+            failure: function (response) {
+                //console.log(response);
+            },
+            error: function (response) {
+                //console.log(response);
+            }
+        });
+};
 
     function fillSettelemets() {
         $.ajax({
@@ -741,31 +829,42 @@
             showValidationMessage("txtName", "Name Required!");
             res = false;
         }
-        if ($("#txtLongitude").val() == '') {
-            showValidationMessage("txtLongitude", "Longitude Required!");
-            res = false;
-        }
-        if ($("#txtLatitude").val() == '') {
-            showValidationMessage("txtLatitude", "Latitude Required!");
-            res = false;
-        }
-        if ($("#txtABS").val() == '') {
-            showValidationMessage("txtABS", "Timeperiod (abs.) Required!");
-            res = false;
-        }
+        //if ($("#txtLongitude").val() == '') {
+        //    showValidationMessage("txtLongitude", "Longitude Required!");
+        //    res = false;
+        //}
+        //if ($("#txtLatitude").val() == '') {
+        //    showValidationMessage("txtLatitude", "Latitude Required!");
+        //    res = false;
+        //}
+        //if ($("#txtABS").val() == '') {
+        //    showValidationMessage("txtABS", "Timeperiod (abs.) Required!");
+        //    res = false;
+        //}
         if ($("#ddlREL").val() == '0') {
             $('#ddlREL').next().next().html('<i class="fa fa-times-circle-o"></i> Timeperiod (rel.) Required!').show();
             $('#ddlREL').parent('div').addClass('has-error');
             res = false;
         }
-        if ($("#txtNumber").val() == '') {
-            showValidationMessage("txtNumber", "Number (Buildings) !");
+        //if ($("#txtNumber").val() == '') {
+        //    showValidationMessage("txtNumber", "Number (Buildings) Required!");
+        //    res = false;
+        //}
+        //if ($("#txtYears").val() == '') {
+        //    showValidationMessage("txtYears", "Activity (Years) Required!");
+        //    res = false;
+        //}
+
+        //if ($("#txtSurface").val() == '') {
+        //    showValidationMessage("txtSurface", "Surface (Hectars) Required!");
+        //    res = false;
+        //}
+        if ($("#ddlCountry").val() == '0') {
+            $('#ddlCountry').next().next().html('<i class="fa fa-times-circle-o"></i> Country Required!').show();
+            $('#ddlCountry').parent('div').addClass('has-error');
             res = false;
         }
-        if ($("#txtYears").val() == '') {
-            showValidationMessage("txtYears", "Activity (Years)!");
-            res = false;
-        }
+        
         return res;
     }
 
@@ -783,11 +882,13 @@
         var REL = $("#ddlREL").val();
         var Number = $("#txtNumber").val();
         var Years = $("#txtYears").val();
-        var Description = $('iframe').contents().find('.wysihtml5-editor').html();
+        var Description = $('#txtDescription').val();
         var Id = $("#hdnId").val();
+        var Surface = $("#txtSurface").val();
         var token = $("#hdnRandom").val();
+        var Country = $("#ddlCountry").val();
 
-        var data = JSON.stringify({ Name: Name, Longitude: Longitude, Latitude: Latitude, ABS: ABS, REL: REL, Number: Number, Years: Years, Description: Description, Id: Id, token: token });
+        var data = JSON.stringify({ Name: Name, Longitude: Longitude, Latitude: Latitude, ABS: ABS, REL: REL, Number: Number, Years: Years, Description: Description, Id: Id, Surface: Surface, StrayFinds: "true", Prospection: "false", Excavation: "false", Country: Country, token: token });
         $.ajax({
             url: '../Settlement/AddSettlement',
             data: data,
@@ -832,13 +933,12 @@
             }]
         });
         $(".select2").select2();
-        //bootstrap WYSIHTML5 - text editors
-        $editor = $(".textarea").wysihtml5();
 
         GenarateRandomString();
         fillTimeperiodRelatives();
         fillLiteratures();
         fillSettelemets();
+        fillGeoJson();
     });
 
     $(document).ready(function () {

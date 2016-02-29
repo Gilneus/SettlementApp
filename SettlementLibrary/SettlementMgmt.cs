@@ -82,7 +82,7 @@ namespace SettlementLibrary
                 return false;
             }
         }
-        public static int AddSettlement(int Id, string Name, string Description, string latitude, string longitude, string TimeperiodAbsolute, int TimeperiodRelative, int NumberBuildings, int ActivityYears, string temptoken)
+        public static int AddSettlement(int Id, string Name, string Description, string latitude, string longitude, string TimeperiodAbsolute, int TimeperiodRelative, int NumberBuildings, int ActivityYears, int Surface, bool StrayFind, bool Prospection, bool Excavation, string Country, string temptoken)
         {
             try
             {
@@ -99,6 +99,11 @@ namespace SettlementLibrary
                         obj.TimeperiodRelative = TimeperiodRelative;
                         obj.NumberBuildings = NumberBuildings;
                         obj.ActivityYears = ActivityYears;
+                        obj.SurfaceInHectars = Surface;
+                        obj.SurfaceStrayFinds = StrayFind;
+                        obj.SurfaceExcavation = Excavation;
+                        obj.SurfaceProspection = Prospection;
+                        obj.Country = Country;
 
                         db.Settlements.Add(obj);
                         db.Entry(obj).State = EntityState.Added;
@@ -124,6 +129,11 @@ namespace SettlementLibrary
                         obj.TimeperiodRelative = TimeperiodRelative;
                         obj.NumberBuildings = NumberBuildings;
                         obj.ActivityYears = ActivityYears;
+                        obj.SurfaceInHectars = Surface;
+                        obj.SurfaceStrayFinds = StrayFind;
+                        obj.SurfaceExcavation = Excavation;
+                        obj.SurfaceProspection = Prospection;
+                        obj.Country = Country;
                         db.Entry(obj).State = EntityState.Modified;
                         Id = db.SaveChanges();
 

@@ -4,13 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="28dfa1bd8a354a7aaaf52bbb1e9d475b" Name="Diagram1">
-        <EntityTypeShape EntityType="SettlementManagementModel.Literature" Width="1.5" PointX="1" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="SettlementManagementModel.LiteratureReference" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SettlementManagementModel.Settlement" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SettlementManagementModel.TimeperiodRelative" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SettlementManagementModel.User" Width="1.5" PointX="7.25" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SettlementManagementModel.ErrorLog" Width="1.5" PointX="9.375" PointY="3" />
+      <Diagram DiagramId="28dfa1bd8a354a7aaaf52bbb1e9d475b" Name="Diagram1" ZoomLevel="88" ShowGrid="true">
+        <EntityTypeShape EntityType="SettlementManagementModel.Errorlog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.Literaturereference" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.Timeperiodrelative" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.ErrorLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.LiteratureReference" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.Literature" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.TimeperiodRelative" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.User" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SettlementManagementModel.Settlement" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

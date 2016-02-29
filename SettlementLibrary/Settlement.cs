@@ -15,6 +15,7 @@ namespace SettlementLibrary
     public partial class Settlement
     {
         public int Id { get; set; }
+        public string Country { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string latitude { get; set; }
@@ -23,5 +24,9 @@ namespace SettlementLibrary
         public Nullable<int> TimeperiodRelative { get; set; }
         public Nullable<int> NumberBuildings { get; set; }
         public Nullable<int> ActivityYears { get; set; }
+        public Nullable<int> SurfaceInHectars { get; set; }
+        public Nullable<bool> SurfaceStrayFinds { get; set; }
+        public Nullable<bool> SurfaceProspection { get; set; }
+        public Nullable<bool> SurfaceExcavation { get; set; }
     }
 }
