@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Version History";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Version history
+            <small>Short overview of the application changes.</small>
+        </h1>
+        <div class="alert alert-danger alert-dismissible" id="divMSG" style="margin: 15px 0px 5px 0px; display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <span class="errMSG"><i class="icon fa fa-ban"></i>Invalid User Name or Password!</span>
+        </div>
+        <input type="hidden" id="hdnRandom" value="" />
+        <input type="hidden" id="hdnId" value="0" />
+    </section>
+    <section class="content">
+        <div class="row">
+            <h3 class="col-xs-12">
+                Version 1.0 - 29.02.2016
+            </h3>
+        </div>
+        <ul class="row">
+            <li>Page Authetification and user management</li>
+            <li>Settlement overview</li>
+            <li>Adding, editing and deleting settlement</li>
+            <li>Adding and Deleting Literature and Literature references</li>
+            <li>Loading and storing of relative Timeperiods</li>
+            <li>About and imprint pages</li>
+            <li>EntityFramework Data Model</li>
+        </ul>
+    </section>
+</div>
