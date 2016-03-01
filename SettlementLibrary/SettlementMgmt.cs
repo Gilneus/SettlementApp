@@ -61,7 +61,7 @@ namespace SettlementLibrary
                 return null;
             }
         }
-        public static bool DeleteSettlement(int id)
+        public static bool DeleteSettlement(int id, string userId)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace SettlementLibrary
                 {
                     List<LiteratureReference> lst = db.LiteratureReferences.Where(s => s.Settlement == id).ToList();
                     db.LiteratureReferences.RemoveRange(lst);
-                    Settlement obj = db.Settlements.Where(l => l.Id == id).SingleOrDefault();
+                    Settlement obj = db.Settlements.Where(l => l.Id == id && l.AuthorId == userId).SingleOrDefault();
                     db.Settlements.Remove(obj);
                     id = db.SaveChanges();
 
@@ -82,7 +82,7 @@ namespace SettlementLibrary
                 return false;
             }
         }
-        public static int AddSettlement(int Id, string Name, string Description, string latitude, string longitude, string TimeperiodAbsolute, int TimeperiodRelative, int NumberBuildings, int ActivityYears, int Surface, bool StrayFind, bool Prospection, bool Excavation, string Country, string temptoken)
+        public static int AddSettlement(int Id, string Name, string Description, string latitude, string longitude, string TimeperiodAbsolute, int TimeperiodRelative, int NumberBuildings, int ActivityYears, int Surface, bool StrayFind, bool Prospection, bool Excavation, string Country, string UserId, string temptoken)
         {
             try
             {
@@ -104,6 +104,7 @@ namespace SettlementLibrary
                         obj.SurfaceExcavation = Excavation;
                         obj.SurfaceProspection = Prospection;
                         obj.Country = Country;
+                        obj.AuthorId = UserId;
 
                         db.Settlements.Add(obj);
                         db.Entry(obj).State = EntityState.Added;

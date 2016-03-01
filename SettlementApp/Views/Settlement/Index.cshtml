@@ -33,10 +33,10 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Absolute Time Period</th>
-                                    <th>Relative Time Period</th>
-                                    <th>Action</th>
+                                    <th>Country</th>
+                                    <th>Absolute Timeperiod</th>
+                                    <th>Surface (Hectars)</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="example1Body"></tbody>
@@ -103,6 +103,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
+                                <div id="map"></div>
                                 <textarea id="txtGeoJson" class="textarea" placeholder="Place Description" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 
                                 <!-- /.form-group -->
@@ -209,7 +210,7 @@
                                 </div>
                                 <!-- /.form-group -->
                                 <div class="form-group">
-                                    <label for="ddlABS">Timeperiod (abs.)</label>
+                                    <label for="ddlABS">Absolute Timeperiod</label>
                                     <input type="text" class="form-control" id="txtABS" placeholder="Enter Timeperiod (abs.)">
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
@@ -238,7 +239,7 @@
                                 </div>
                                 <!-- /.form-group -->
                                 <div class="form-group">
-                                    <label for="ddlREL">Timeperiod (rel.)</label>
+                                    <label for="ddlREL">Relative Timeperiod</label>
                                     <select class="form-control select2" style="width: 100%;" id="ddlREL">
                                         <option value="0" selected="selected">--Select Timeperiod (rel.) --</option>
                                         <option value="1">AC 2020</option>
@@ -526,6 +527,8 @@
             success: function (response) {
                 //console.log(response);
                 $("#txtGeoJson").val(JSON.stringify(response));
+                L.mapbox.accessToken = 'pk.eyJ1IjoiZ2lsbmV1cyIsImEiOiJjaWw4Z205eTIwY2RidzRrcndlbDVnZjA0In0.s58XBRag2xjo6W_5EFEHgg';
+                L.mapbox.map('map', 'mapbox.streets').setView([16.435727, 50.674063], 6).featureLayer.setGeoJSON(response);
             },
             failure: function (response) {
                 //console.log(response);
@@ -552,17 +555,19 @@
                         st += '<tr>';
                         st += '    <td>' + data[i].Name + '</td>';
                         st += '    <td>';
-                        st += '        ' + data[i].Description + '';
+                        st += '        ' + data[i].Country + '';
                         st += '    </td>';
                         st += '    <td>' + data[i].TimeperiodAbsolute + '</td>';
-                        st += '    <td>' + data[i].TimeperiodRelativeName + '</td>';
+                        st += '    <td>' + data[i].Surface + '</td>';
                         st += '    <td>';
                         st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Edit" onclick="showEditSettlement(' + data[i].Id + ')">';
                         st += '            <i class="fa fa-edit"></i>';
                         st += '        </button>';
-                        st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Delete" onclick="DeleteSettlement(' + data[i].Id + ')" >';
-                        st += '            <i class="fa fa-close"></i>';
-                        st += '        </button>';
+                        if(data[i].CanDelete == true){
+                            st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Delete" onclick="DeleteSettlement(' + data[i].Id + ')" >';
+                            st += '            <i class="fa fa-close"></i>';
+                            st += '        </button>';
+                        }
                         st += '    </td>';
                         st += '</tr>';
                     });
@@ -718,11 +723,17 @@
 
                     $("#example2").DataTable({
                         "bDestroy": true,
-                    });
+                        "bFilter": false,
+                        "bLengthChange": false
+                });
                     $("#example2").dataTable().fnDestroy();
                     $("#example2Body").html(st);
                     //Append stuff to my table
-                    $("#example2").DataTable();
+                    $("#example2").DataTable(
+                        {
+                            "bFilter": false,
+                            "bLengthChange": false
+                        });
                     //$example1.fnDraw()
                 }
             },
@@ -842,7 +853,7 @@
         //    res = false;
         //}
         if ($("#ddlREL").val() == '0') {
-            $('#ddlREL').next().next().html('<i class="fa fa-times-circle-o"></i> Timeperiod (rel.) Required!').show();
+            $('#ddlREL').next().next().html('<i class="fa fa-times-circle-o"></i> Relative Timeperiod Required!').show();
             $('#ddlREL').parent('div').addClass('has-error');
             res = false;
         }

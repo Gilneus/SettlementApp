@@ -13,7 +13,6 @@ namespace SettlementLibrary
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-
     public partial class SettlementDB : DbContext
     {
         public SettlementDB()

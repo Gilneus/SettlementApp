@@ -28,5 +28,6 @@ namespace SettlementLibrary
         public Nullable<bool> SurfaceStrayFinds { get; set; }
         public Nullable<bool> SurfaceProspection { get; set; }
         public Nullable<bool> SurfaceExcavation { get; set; }
+        public string AuthorId { get; set; }
     }
 }

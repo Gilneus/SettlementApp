@@ -51,6 +51,7 @@
           <Property Name="SurfaceStrayFinds" Type="bool" />
           <Property Name="SurfaceProspection" Type="bool" />
           <Property Name="SurfaceExcavation" Type="bool" />
+          <Property Name="AuthorId" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="timeperiodrelatives">
           <Key>
@@ -66,6 +67,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="100" />
           <Property Name="Password" Type="varchar" MaxLength="200" />
+          <Property Name="IsSuperuser" Type="bool" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SettlementManagementModelStoreContainer">
           <EntitySet Name="errorlogs" EntityType="Self.errorlogs" Schema="gilneus_settdb" store:Type="Tables" />
@@ -113,7 +115,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="999999" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TimeperiodRelative">
           <Key>
@@ -129,6 +131,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsSuperuser" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Settlement">
           <Key>
@@ -148,6 +151,7 @@
           <Property Name="SurfaceStrayFinds" Type="Boolean" />
           <Property Name="SurfaceProspection" Type="Boolean" />
           <Property Name="SurfaceExcavation" Type="Boolean" />
+          <Property Name="AuthorId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -197,6 +201,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SettlementManagementModel.User">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="IsSuperuser" ColumnName="IsSuperuser" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -206,6 +211,7 @@
           <EntitySetMapping Name="Settlements1">
             <EntityTypeMapping TypeName="SettlementManagementModel.Settlement">
               <MappingFragment StoreEntitySet="settlements">
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="SurfaceExcavation" ColumnName="SurfaceExcavation" />
                 <ScalarProperty Name="SurfaceProspection" ColumnName="SurfaceProspection" />
                 <ScalarProperty Name="SurfaceStrayFinds" ColumnName="SurfaceStrayFinds" />

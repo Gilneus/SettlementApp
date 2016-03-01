@@ -47,7 +47,7 @@ namespace SettlementApp.Controllers
         [HttpGet]
         public ActionResult getAllSettelemets()
         {
-            List<Settlement> obj = SettlementMgmt.getAllSettlement();
+            var obj = SettlementMgmt.getAllSettlement().Select(x => new { Name = x.Name, Country = x.Country, TimeperiodAbsolute = x.TimeperiodAbsolute, Surface = x.SurfaceInHectars.ToString(), Id = x.Id, CanDelete = (x.AuthorId == ((User) Session["User"]).Id.ToString() || ((User)Session["User"]).IsSuperuser) });
 
             String str = JsonConvert.SerializeObject(obj);
             return Json(new { success = 1, data = str }, JsonRequestBehavior.AllowGet);
@@ -56,7 +56,8 @@ namespace SettlementApp.Controllers
         [HttpPost]
         public ActionResult DeleteSettlement(string id)
         {
-            if (SettlementMgmt.DeleteSettlement(Convert.ToInt32(id)))
+            User objUser = (User) Session["User"];
+            if (SettlementMgmt.DeleteSettlement(Convert.ToInt32(id), objUser?.Id.ToString()))
             {
                 return Json("Success");
             }
@@ -69,7 +70,8 @@ namespace SettlementApp.Controllers
         [HttpPost]
         public ActionResult AddSettlement(string Name, string Longitude, string Latitude, string ABS, string REL, string Number, string Years, string Description, string Id, string Surface, string StrayFinds, string Prospection, string Excavation, string Country, string token)
         {
-            int id = SettlementMgmt.AddSettlement(Convert.ToInt32(Id), Name, Description, Latitude, Longitude, ABS, string.IsNullOrEmpty(REL) ? 0 : Convert.ToInt32(REL), string.IsNullOrEmpty(Number) ? 0 : Convert.ToInt32(Number), string.IsNullOrEmpty(Years) ? 0 : Convert.ToInt32(Years), string.IsNullOrEmpty(Surface) ? 0 : Convert.ToInt32(Surface), Convert.ToBoolean(StrayFinds), Convert.ToBoolean(Prospection), Convert.ToBoolean(Excavation), Country, token);
+            User objUser = (User)Session["User"];
+            int id = SettlementMgmt.AddSettlement(Convert.ToInt32(Id), Name, Description, Latitude, Longitude, ABS, string.IsNullOrEmpty(REL) ? 0 : Convert.ToInt32(REL), string.IsNullOrEmpty(Number) ? 0 : Convert.ToInt32(Number), string.IsNullOrEmpty(Years) ? 0 : Convert.ToInt32(Years), string.IsNullOrEmpty(Surface) ? 0 : Convert.ToInt32(Surface), Convert.ToBoolean(StrayFinds), Convert.ToBoolean(Prospection), Convert.ToBoolean(Excavation), Country, objUser?.Id.ToString(), token);
             if (id > 0)
             {
                 return Json("Success");
@@ -93,17 +95,29 @@ namespace SettlementApp.Controllers
         public ActionResult GetGeoJson()
         {
             var allSettlements = SettlementMgmt.getAllSettlement();
-            List<Point> points = new List<Point>();
+            string[] points = new string[allSettlements.Count];
             List<LatLng> coordinates = new List<LatLng>();
 
-            foreach (var settlement in allSettlements)
+            for (int i = 0; i < allSettlements.Count; i++)
             {
-                coordinates = new List<LatLng>();
-                coordinates.Add(new LatLng(string.IsNullOrEmpty(settlement.latitude) ? 0 : Convert.ToDouble(settlement.latitude), string.IsNullOrEmpty(settlement.longitude) ? 0 : Convert.ToDouble(settlement.longitude)));
-                points.Add(new Point(coordinates, new { Name = settlement.Name, Surface = settlement.SurfaceInHectars, Buildings = settlement.NumberBuildings, Activity = settlement.ActivityYears }));
-                
+                var settlement = allSettlements[i];
+                points[i] =
+                    JsonConvert.SerializeObject(new
+                    {
+                        type = "Point",
+                        coordinates =
+                            new[]
+                            {
+                                new
+                                {
+                                    settlement.latitude,
+                                    settlement.longitude
+                                }
+                            },
+                        properties = new {name = settlement.Name, country = settlement.Country}
+                    }).ToString();
             }
-
+            
             return Json(points, JsonRequestBehavior.AllowGet);
 
         }
