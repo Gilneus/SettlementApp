@@ -31,7 +31,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="longtext" />
         </EntityType>
         <EntityType Name="settlements">
           <Key>
@@ -48,10 +48,8 @@
           <Property Name="NumberBuildings" Type="int" />
           <Property Name="ActivityYears" Type="int" />
           <Property Name="SurfaceInHectars" Type="int" />
-          <Property Name="SurfaceStrayFinds" Type="bool" />
-          <Property Name="SurfaceProspection" Type="bool" />
-          <Property Name="SurfaceExcavation" Type="bool" />
           <Property Name="AuthorId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocumentationType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="timeperiodrelatives">
           <Key>
@@ -83,11 +81,11 @@
       <Schema Namespace="SettlementManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SettlementDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ErrorLogs" EntityType="SettlementManagementModel.ErrorLog" />
-          <EntitySet Name="LiteratureReferences" EntityType="SettlementManagementModel.LiteratureReference" />
-          <EntitySet Name="Literatures" EntityType="SettlementManagementModel.Literature" />
-          <EntitySet Name="TimeperiodRelatives" EntityType="SettlementManagementModel.TimeperiodRelative" />
-          <EntitySet Name="Users" EntityType="SettlementManagementModel.User" />
+          <EntitySet Name="LiteratureReferences1" EntityType="SettlementManagementModel.LiteratureReference" />
+          <EntitySet Name="Literatures1" EntityType="SettlementManagementModel.Literature" />
           <EntitySet Name="Settlements1" EntityType="SettlementManagementModel.Settlement" />
+          <EntitySet Name="TimeperiodRelatives1" EntityType="SettlementManagementModel.TimeperiodRelative" />
+          <EntitySet Name="Users1" EntityType="SettlementManagementModel.User" />
         </EntityContainer>
         <EntityType Name="ErrorLog">
           <Key>
@@ -115,7 +113,25 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="999999" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Settlement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeperiodAbsolute" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TimeperiodRelative" Type="Int32" />
+          <Property Name="NumberBuildings" Type="Int32" />
+          <Property Name="ActivityYears" Type="Int32" />
+          <Property Name="SurfaceInHectars" Type="Int32" />
+          <Property Name="AuthorId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentationType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TimeperiodRelative">
           <Key>
@@ -133,27 +149,7 @@
           <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsSuperuser" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Settlement">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TimeperiodAbsolute" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="TimeperiodRelative" Type="Int32" />
-          <Property Name="NumberBuildings" Type="Int32" />
-          <Property Name="ActivityYears" Type="Int32" />
-          <Property Name="SurfaceInHectars" Type="Int32" />
-          <Property Name="SurfaceStrayFinds" Type="Boolean" />
-          <Property Name="SurfaceProspection" Type="Boolean" />
-          <Property Name="SurfaceExcavation" Type="Boolean" />
-          <Property Name="AuthorId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -171,7 +167,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LiteratureReferences">
+          <EntitySetMapping Name="LiteratureReferences1">
             <EntityTypeMapping TypeName="SettlementManagementModel.LiteratureReference">
               <MappingFragment StoreEntitySet="literaturereferences">
                 <ScalarProperty Name="TempToken" ColumnName="TempToken" />
@@ -182,7 +178,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Literatures">
+          <EntitySetMapping Name="Literatures1">
             <EntityTypeMapping TypeName="SettlementManagementModel.Literature">
               <MappingFragment StoreEntitySet="literatures">
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -190,31 +186,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TimeperiodRelatives">
-            <EntityTypeMapping TypeName="SettlementManagementModel.TimeperiodRelative">
-              <MappingFragment StoreEntitySet="timeperiodrelatives">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SettlementManagementModel.User">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="IsSuperuser" ColumnName="IsSuperuser" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Settlements1">
             <EntityTypeMapping TypeName="SettlementManagementModel.Settlement">
               <MappingFragment StoreEntitySet="settlements">
+                <ScalarProperty Name="DocumentationType" ColumnName="DocumentationType" />
                 <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
-                <ScalarProperty Name="SurfaceExcavation" ColumnName="SurfaceExcavation" />
-                <ScalarProperty Name="SurfaceProspection" ColumnName="SurfaceProspection" />
-                <ScalarProperty Name="SurfaceStrayFinds" ColumnName="SurfaceStrayFinds" />
                 <ScalarProperty Name="SurfaceInHectars" ColumnName="SurfaceInHectars" />
                 <ScalarProperty Name="ActivityYears" ColumnName="ActivityYears" />
                 <ScalarProperty Name="NumberBuildings" ColumnName="NumberBuildings" />
@@ -225,6 +201,24 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeperiodRelatives1">
+            <EntityTypeMapping TypeName="SettlementManagementModel.TimeperiodRelative">
+              <MappingFragment StoreEntitySet="timeperiodrelatives">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users1">
+            <EntityTypeMapping TypeName="SettlementManagementModel.User">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="IsSuperuser" ColumnName="IsSuperuser" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -28,8 +28,8 @@ namespace SettlementLibrary
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
         public virtual DbSet<LiteratureReference> LiteratureReferences { get; set; }
         public virtual DbSet<Literature> Literatures { get; set; }
+        public virtual DbSet<Settlement> Settlements { get; set; }
         public virtual DbSet<TimeperiodRelative> TimeperiodRelatives { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Settlement> Settlements { get; set; }
     }
 }

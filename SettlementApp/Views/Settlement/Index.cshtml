@@ -34,7 +34,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Country</th>
-                                    <th>Absolute Timeperiod</th>
+                                    <th>Relative Timeperiod</th>
                                     <th>Surface (Hectars)</th>
                                     <th>Actions</th>
                                 </tr>
@@ -223,6 +223,16 @@
                                 <div class="form-group">
                                     <label or="txtSurface">Surface (Hectars)</label>
                                     <input type="text" class="form-control" id="txtSurface" placeholder="Enter Surface">
+                                    <label class="control-label lblErr" for="inputError" style="display: none;"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ddlDocumentationType">Documentation type</label>
+                                    <select class="form-control select2" style="width: 100%;" id="ddlDocumentationType">
+                                        <option value="0" selected="selected">--Select Documentation type --</option>
+                                        <option value="Excavation">Excavation</option>
+                                        <option value="Prospection">Propspection</option>
+                                        <option value="StrayFinds">Stray Finds</option>
+                                    </select>
                                     <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
                                 <div class="form-group">
@@ -283,19 +293,20 @@
                             <!-- /.col -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="txtDescription">Literature References</label>
+                                    <label id="litRef">Literature References</label>
                                     <button type="button" class="btn btn-info pull-right" onclick="showAddLiteratureReference()" style="margin-bottom:5px;">Add References</button>
                                     <table id="example2" class="table table-bordered table-striped">
                                         <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Page</th>
-                                                <th style="width: 50px;" class="nosort">Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Page</th>
+                                            <th style="width: 50px;" class="nosort">Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody id="example2Body">
                                         </tbody>
                                     </table>
+                                    <label class="control-label lblErr" for="inputError" style="display:none;"></label>
                                 </div>
                                 <!-- /.form-group -->
                             </div>
@@ -354,6 +365,7 @@
                     $("#txtSurface").val(data.SurfaceInHectars);
                     $('#txtDescription').val(data.Description);
                     $("#ddlCountry").val(data.Country).trigger("change");
+                    $('#ddlDocumentationType').val(data.DocumentationType).trigger("change");
                 }
                 else {
                     showMessage(2, 'Some error occur while Deleting');
@@ -415,6 +427,10 @@
         $("#hdnId").val('0');
         $('#txtDescription').val();
         $("#ddlCountry").val('0').trigger("change");
+        $('#ddlDocumentationType').val('0').trigger('change');
+
+        removeValidationMessage();
+
         GenarateRandomString();
         fillLiteratureReference();
     }
@@ -557,7 +573,7 @@
                         st += '    <td>';
                         st += '        ' + data[i].Country + '';
                         st += '    </td>';
-                        st += '    <td>' + data[i].TimeperiodAbsolute + '</td>';
+                        st += '    <td>' + data[i].TimeperiodRelativeName + '</td>';
                         st += '    <td>' + data[i].Surface + '</td>';
                         st += '    <td>';
                         st += '        <button type="button" class="btn btn-default" style="width: 35px;" title="Edit" onclick="showEditSettlement(' + data[i].Id + ')">';
@@ -875,6 +891,11 @@
             $('#ddlCountry').parent('div').addClass('has-error');
             res = false;
         }
+
+        if ($("#example2").dataTable().fnGetData().length < 1) {
+            showMessage(2, 'One Literature Reference Required!');
+            $('#example2').parent('div').addClass('has-error');
+        }
         
         return res;
     }
@@ -898,8 +919,9 @@
         var Surface = $("#txtSurface").val();
         var token = $("#hdnRandom").val();
         var Country = $("#ddlCountry").val();
+        var DocumentationType = $('#ddlDocumentationType').val();
 
-        var data = JSON.stringify({ Name: Name, Longitude: Longitude, Latitude: Latitude, ABS: ABS, REL: REL, Number: Number, Years: Years, Description: Description, Id: Id, Surface: Surface, StrayFinds: "true", Prospection: "false", Excavation: "false", Country: Country, token: token });
+        var data = JSON.stringify({ Name: Name, Longitude: Longitude, Latitude: Latitude, ABS: ABS, REL: REL, Number: Number, Years: Years, Description: Description, Id: Id, Surface: Surface, DocumentationType : DocumentationType, Country: Country, token: token });
         $.ajax({
             url: '../Settlement/AddSettlement',
             data: data,

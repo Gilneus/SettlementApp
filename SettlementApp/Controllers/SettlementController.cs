@@ -47,7 +47,7 @@ namespace SettlementApp.Controllers
         [HttpGet]
         public ActionResult getAllSettelemets()
         {
-            var obj = SettlementMgmt.getAllSettlement().Select(x => new { Name = x.Name, Country = x.Country, TimeperiodAbsolute = x.TimeperiodAbsolute, Surface = x.SurfaceInHectars.ToString(), Id = x.Id, CanDelete = (x.AuthorId == ((User) Session["User"]).Id.ToString() || ((User)Session["User"]).IsSuperuser) });
+            var obj = SettlementMgmt.getAllSettlement().Select(x => new { Name = x.Name, Country = x.Country, TimeperiodRelativeName = x.TimeperiodRelativeName, Surface = x.SurfaceInHectars.ToString(), Id = x.Id, CanDelete = (x.AuthorId == ((User) Session["User"]).Id.ToString() || ((User)Session["User"]).IsSuperuser) });
 
             String str = JsonConvert.SerializeObject(obj);
             return Json(new { success = 1, data = str }, JsonRequestBehavior.AllowGet);
@@ -68,10 +68,10 @@ namespace SettlementApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSettlement(string Name, string Longitude, string Latitude, string ABS, string REL, string Number, string Years, string Description, string Id, string Surface, string StrayFinds, string Prospection, string Excavation, string Country, string token)
+        public ActionResult AddSettlement(string Name, string Longitude, string Latitude, string ABS, string REL, string Number, string Years, string Description, string Id, string Surface, string DocumentationType, string Country, string token)
         {
             User objUser = (User)Session["User"];
-            int id = SettlementMgmt.AddSettlement(Convert.ToInt32(Id), Name, Description, Latitude, Longitude, ABS, string.IsNullOrEmpty(REL) ? 0 : Convert.ToInt32(REL), string.IsNullOrEmpty(Number) ? 0 : Convert.ToInt32(Number), string.IsNullOrEmpty(Years) ? 0 : Convert.ToInt32(Years), string.IsNullOrEmpty(Surface) ? 0 : Convert.ToInt32(Surface), Convert.ToBoolean(StrayFinds), Convert.ToBoolean(Prospection), Convert.ToBoolean(Excavation), Country, objUser?.Id.ToString(), token);
+            int id = SettlementMgmt.AddSettlement(Convert.ToInt32(Id), Name, Description, Latitude, Longitude, ABS, string.IsNullOrEmpty(REL) ? 0 : Convert.ToInt32(REL), string.IsNullOrEmpty(Number) ? 0 : Convert.ToInt32(Number), string.IsNullOrEmpty(Years) ? 0 : Convert.ToInt32(Years), string.IsNullOrEmpty(Surface) ? 0 : Convert.ToInt32(Surface), DocumentationType, Country, objUser?.Id.ToString(), token);
             if (id > 0)
             {
                 return Json("Success");

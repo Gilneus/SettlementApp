@@ -25,9 +25,7 @@ namespace SettlementLibrary
         public Nullable<int> NumberBuildings { get; set; }
         public Nullable<int> ActivityYears { get; set; }
         public Nullable<int> SurfaceInHectars { get; set; }
-        public Nullable<bool> SurfaceStrayFinds { get; set; }
-        public Nullable<bool> SurfaceProspection { get; set; }
-        public Nullable<bool> SurfaceExcavation { get; set; }
         public string AuthorId { get; set; }
+        public string DocumentationType { get; set; }
     }
 }
