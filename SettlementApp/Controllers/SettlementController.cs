@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using GeoJson.net2;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SettlementApp.Controllers
 {
@@ -47,7 +47,7 @@ namespace SettlementApp.Controllers
         [HttpGet]
         public ActionResult getAllSettelemets()
         {
-            var obj = SettlementMgmt.getAllSettlement().Select(x => new { Name = x.Name, Country = x.Country, TimeperiodRelativeName = x.TimeperiodRelativeName, Surface = x.SurfaceInHectars.ToString(), Id = x.Id, CanDelete = (x.AuthorId == ((User) Session["User"]).Id.ToString() || ((User)Session["User"]).IsSuperuser) });
+            var obj = SettlementMgmt.getAllSettlement().Select(x => new { Name = x.Name, Country = x.Country, TimeperiodRelativeName = x.TimeperiodRelativeName, SurfaceInHectars = x.SurfaceInHectars.ToString(), Id = x.Id, CanDelete = (x.AuthorId == ((User) Session["User"]).Id.ToString() || ((User)Session["User"]).IsSuperuser), Latitude = x.latitude, Longitude = x.longitude, NumberBuilding = x.NumberBuildings, AcivityInYears = x.ActivityYears, TimeperiodAbsolute = x.TimeperiodAbsolute, DocumentationType = x.DocumentationType, Description = x.Description });
 
             String str = JsonConvert.SerializeObject(obj);
             return Json(new { success = 1, data = str }, JsonRequestBehavior.AllowGet);
@@ -90,38 +90,6 @@ namespace SettlementApp.Controllers
             String str = JsonConvert.SerializeObject(obj);
             return Json(new { success = 1, data = str }, JsonRequestBehavior.AllowGet);
         }
-
-        [HttpGet]
-        public ActionResult GetGeoJson()
-        {
-            var allSettlements = SettlementMgmt.getAllSettlement();
-            string[] points = new string[allSettlements.Count];
-            List<LatLng> coordinates = new List<LatLng>();
-
-            for (int i = 0; i < allSettlements.Count; i++)
-            {
-                var settlement = allSettlements[i];
-                points[i] =
-                    JsonConvert.SerializeObject(new
-                    {
-                        type = "Point",
-                        coordinates =
-                            new[]
-                            {
-                                new
-                                {
-                                    settlement.latitude,
-                                    settlement.longitude
-                                }
-                            },
-                        properties = new {name = settlement.Name, country = settlement.Country}
-                    }).ToString();
-            }
-            
-            return Json(points, JsonRequestBehavior.AllowGet);
-
-        }
-
     }
 
 }
